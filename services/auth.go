@@ -1,9 +1,13 @@
 package services
 
 import (
+	"errors"
+	"fmt"
 	"todo-app/auth"
 	"todo-app/models"
 	"todo-app/repo"
+
+	"gorm.io/gorm"
 )
 
 type AuthService struct {
@@ -34,4 +38,24 @@ func (s *AuthService) GetUsers() (*[]models.User, error) {
 		return nil, err
 	}
 	return users, nil
+}
+
+func (s *AuthService) LoginUser(username, password string) (string, error) {
+	user, err := s.repo.GetUserByUsername(username)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return "", errors.New("invalid username or password")
+		}
+		return "", fmt.Errorf("failed to find user: %w", err)
+	}
+
+	if !auth.CheckPasswordHash(password, user.Password) {
+		return "", errors.New("invalid username or password")
+	}
+
+	token, err := auth.GenerateToken(user.Id)
+	if err != nil {
+		return "", fmt.Errorf("failed to generate token: %w", err)
+	}
+	return token, nil
 }
