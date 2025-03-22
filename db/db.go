@@ -20,7 +20,10 @@ func InitDB(dsn string) error {
 	}
 	fmt.Println("Connected to the database")
 
-	if err := DB.AutoMigrate(&models.Task{}); err != nil {
+	if err := DB.AutoMigrate(
+		&models.User{},
+		&models.Task{},
+	); err != nil {
 		return err
 	}
 

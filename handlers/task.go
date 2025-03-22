@@ -103,3 +103,4 @@ func (h *TaskHandler) DeleteTask(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Task deleted"})
 }
+

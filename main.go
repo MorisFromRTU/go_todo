@@ -7,6 +7,7 @@ import (
 	"todo-app/db"
 	"todo-app/handlers"
 	"todo-app/repo"
+	"todo-app/routes"
 	"todo-app/services"
 
 	"github.com/gin-contrib/cors"
@@ -31,16 +32,19 @@ func main() {
 	}
 
 	taskRepo := repo.NewTaskRepository(db.DB)
+	authRepo := repo.NewAuthRepository(db.DB)
+
 	taskService := services.NewTaskService(taskRepo)
+	authService := services.NewAuthService(authRepo)
+
 	taskHandler := handlers.NewTaskHandler(taskService)
+	authHandler := handlers.NewAuthHandler(authService)
+
 	r := gin.Default()
 
 	r.Use(cors.Default())
 
-	r.GET("/tasks", taskHandler.GetTasks)
-	r.POST("/tasks", taskHandler.AddTask)
-	r.PUT("/tasks/:id", taskHandler.CompleteTask)
-	r.PATCH("/tasks/:id", taskHandler.ChangeTaskTitle)
-	r.DELETE("/tasks/:id", taskHandler.DeleteTask)
+	routes.RegisterTaskRoutes(r, taskHandler)
+	routes.RegisterAuthRoutes(r, authHandler)
 	r.Run(":8000")
 }

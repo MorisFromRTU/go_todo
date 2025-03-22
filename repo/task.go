@@ -11,7 +11,7 @@ type TaskRepository struct {
 	DB *gorm.DB
 }
 
-var validate = validator.New()
+var taskValidate = validator.New()
 
 func NewTaskRepository(db *gorm.DB) *TaskRepository {
 	return &TaskRepository{DB: db}
@@ -26,7 +26,7 @@ func (r *TaskRepository) GetTasks() ([]models.Task, error) {
 }
 
 func (r *TaskRepository) AddTask(newTask *models.Task) error {
-	if err := validate.Struct(newTask); err != nil {
+	if err := taskValidate.Struct(newTask); err != nil {
 		return err
 	}
 	return r.DB.Create(newTask).Error
