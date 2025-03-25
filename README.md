@@ -31,6 +31,7 @@ DB_PASSWORD=здесь пароль к БД
 DB_NAME=здесь название БД
 JWT_KEY=здесь JWT токен
 JWT_KEY_TEST=здесь еще один JWT токен
+VITE_API_URL=адрес бека тут
 
 **Установите зависимости Go** :
 `go mod download`

@@ -13,9 +13,11 @@ services:
       - "5432:5432"
     volumes:
       - go_postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-network
   app:
     build: 
-      context: .
+      context: ./backend
       dockerfile: ./Dockerfile.dev
     container_name: go-tasks-app
     depends_on:
@@ -30,6 +32,25 @@ services:
       DB_NAME: ${DB_NAME}
     ports:
       - "8000:8000"
+    networks:
+      - todo-network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - ${VITE_API_URL}
+    depends_on:
+      - app
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge
 
 volumes:
   go_postgres_data:
+  
