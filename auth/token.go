@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -31,4 +32,28 @@ func GenerateToken(userId uint) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func VerifyToken(tokenString string) (uint, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if err != nil {
+		if errors.Is(err, jwt.ErrTokenExpired) {
+			return 0, errors.New("token expired")
+		}
+		return 0, errors.New("invalid token")
+	}
+
+	if !token.Valid {
+		return 0, errors.New("invalid token")
+	}
+
+	claims, ok := token.Claims.(*Claims)
+	if !ok {
+		return 0, errors.New("invalid token claims")
+	}
+
+	return claims.UserID, nil
 }
