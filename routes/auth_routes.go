@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterAuthRoutes(r *gin.Engine, h *handlers.AuthHanlder) {
-	authGroup := r.Group("/users")
+	authGroup := r.Group("/auth")
 	{
 		authGroup.POST("/register", h.RegisterUser)
 		authGroup.GET("", h.GetUsers)

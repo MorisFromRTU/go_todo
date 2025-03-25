@@ -18,11 +18,12 @@ func (s *TaskService) GetTasks() ([]models.Task, error) {
 	return s.repo.GetTasks()
 }
 
-func (s *TaskService) AddTask(title string) (*models.Task, error) {
+func (s *TaskService) AddTask(title string, userID uint) (*models.Task, error) {
 	if title == "" {
 		return nil, errors.New("title is required")
 	}
-	newTask := &models.Task{Title: title, Done: false}
+
+	newTask := &models.Task{Title: title, Done: false, UserID: userID}
 	err := s.repo.AddTask(newTask)
 	if err != nil {
 		return nil, err
