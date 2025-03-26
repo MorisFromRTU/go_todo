@@ -18,6 +18,7 @@ import { SxProps} from "@mui/material";
     },
   },
   button: {
+    margin: "12px 0",
     alignSelf: "flex-start",
     backgroundColor: "#1976d2",
     "&:hover": {

@@ -41,7 +41,7 @@ const Home = () => {
         backgroundColor: "#f5f5f5",
       }}
     >
-      {/* Заголовок */}
+
       <Typography
         variant="h4"
         sx={{
@@ -54,7 +54,6 @@ const Home = () => {
         Список задач
       </Typography>
 
-      {/* Форма добавления задач */}
       <Paper
         elevation={3}
         sx={{
@@ -68,7 +67,6 @@ const Home = () => {
         <TaskForm onAddTask={handleAddTask} />
       </Paper>
 
-      {/* Список задач */}
       <Paper
         elevation={3}
         sx={{
@@ -76,6 +74,7 @@ const Home = () => {
           borderRadius: "12px",
           maxWidth: "600px",
           margin: "0 auto",
+          marginTop: "24px",
         }}
       >
         <TaskList

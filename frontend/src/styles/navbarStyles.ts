@@ -15,7 +15,7 @@ export const navbarStyles: { [key: string]: SxProps } = {
     fontFamily: "'Montserrat'",
     fontWeight: "bold",
     "&:hover": {
-      textDecoration: "underline",
+      textDecoration: "none",
     },
   },
 };

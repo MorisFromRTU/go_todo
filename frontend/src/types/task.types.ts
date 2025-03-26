@@ -1,3 +1,8 @@
+export interface AuthForm {
+    username: string;
+    password: string;
+}
+
 export interface Task {
     id: number;
     title: string;
@@ -10,3 +15,9 @@ export interface NewTask {
     done: boolean; 
     userId: number;
 }
+
+export interface AuthFormProps {
+    title: string;
+    buttonText: string;
+    onSubmit: (username: string, password: string) => void;
+  }
