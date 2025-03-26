@@ -32,7 +32,7 @@ func (s *AuthService) RegisterUser(username, password string) error {
 	return err
 }
 
-func (s *AuthService) GetUsers() (*[]models.User, error) {
+func (s *AuthService) GetUsers() ([]models.User, error) {
 	users, err := s.repo.GetAllUsers()
 	if err != nil {
 		return nil, err

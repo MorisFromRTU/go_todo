@@ -24,8 +24,8 @@ func (r *AuthRepository) RegisterUser(newUser *models.User) error {
 	return r.DB.Create(newUser).Error
 }
 
-func (r *AuthRepository) GetAllUsers() (*[]models.User, error) {
-	var users *[]models.User
+func (r *AuthRepository) GetAllUsers() ([]models.User, error) {
+	var users []models.User
 	if err := r.DB.Find(&users).Error; err != nil {
 		return nil, err
 	}

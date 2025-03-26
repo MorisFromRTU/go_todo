@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"todo-app/dto"
 	"todo-app/services"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +37,8 @@ func (h *AuthHanlder) GetUsers(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 	}
-	c.JSON(http.StatusOK, gin.H{"users": users})
+	response := dto.MapToUsersResponse(users)
+	c.JSON(http.StatusOK, gin.H{"users": response})
 }
 
 func (h *AuthHanlder) LoginUser(c *gin.Context) {
